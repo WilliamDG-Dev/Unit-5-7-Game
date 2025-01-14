@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Leaderboard : MonoBehaviour
 {
-    public TextMeshProUGUI[] score;
+    public List<TextMeshProUGUI> score = new List<TextMeshProUGUI>();
     int index = 0;
     void Update()
     {
@@ -15,10 +16,20 @@ public class Leaderboard : MonoBehaviour
             {
                 index++;
             }
+            for (int i = 0; i < score.Count; i++)
+            {
+                for (int j = 0; j < score.Count; j++)
+                {
+                    if (score[i].text == LevelManager.instance.GetLeaderboardText(j))
+                    {
+                        score.RemoveAt(i);
+                    }
+                }
+            }
         }
         catch
         {
-            for (int i = index; i < score.Length; i++)
+            for (int i = index; i < score.Count; i++)
             {
                 score[i].text = "";
             }
